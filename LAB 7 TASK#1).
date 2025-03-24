@@ -1,0 +1,248 @@
+// Bazil-Uddin-Khan 24k-0559
+#include<iostream>
+using namespace std;
+
+class Account
+{
+    protected:
+    int accountNumber;
+    double balance;
+    string accountHolderName;
+    string accountType;
+    double rate = 2.4;
+    int Time = 2;
+
+    public:
+    Account()
+    {
+            accountNumber = 0;
+            balance = 0.0;
+            accountHolderName = " ";
+            accountType = " ";
+
+    }
+
+    Account(int accountnum,double Balance, string accountName,string Type) : accountNumber(accountnum), balance(Balance), accountHolderName(accountName), accountType(Type)
+    {}
+
+    virtual void deposit(double amount)
+    {
+        balance  = balance + amount;
+        cout << " Succesfully Deposited " << endl;
+        
+
+    }
+
+    virtual void withdraw(double amount)
+    {
+        if(balance > amount )
+        {
+             balance = balance - amount;
+        }
+        else
+        {
+            cout << " Sorry cant proceed with withdraw reqeust " << endl;
+        }
+       
+    }
+
+    virtual void CalculateInterest()
+    {
+        double interestrate = (balance * rate * Time)/100;
+        rate = interestrate;
+        cout << " Interest Earned  is " << interestrate << endl;
+
+    }
+
+    virtual void printStatement()
+    {
+        cout << " Rate is " << rate << endl;
+        cout << " Account number  is " << accountNumber << endl;
+        cout << " account holder name  is " << accountHolderName << endl;
+        cout << " Balance is " << balance << endl;
+        cout << " Accountt ype  is " << accountType << endl;
+
+    }
+
+    virtual void GetAccountINfo()
+    {
+        cout << " Rate is " << rate << endl;
+        cout << " Account number  is " << accountNumber << endl;
+        cout << " account holder name  is " << accountHolderName << endl;
+        cout << " Balance is " << balance << endl;
+        cout << " Accountt ype  is " << accountType << endl;
+
+    }
+
+
+};
+
+class SavingsAccount : public Account
+{
+    protected:
+    double interestRate;
+    double minimumBalane;
+
+    public:
+    SavingsAccount()
+    {
+        interestRate  = 0.0;
+        minimumBalane = 0.0;
+    }
+
+    SavingsAccount(int accountnum,double Balance, string accountName,string Type, double rate, double minbalance) : Account(accountnum,Balance,accountName,Type) ,interestRate(rate), minimumBalane(minbalance)
+    {}
+
+    
+    void CalculateInterest()
+    {
+        double RATE = (balance * rate * Time)/100;
+        interestRate = RATE;
+        cout << " Interest  is " << RATE << endl;
+
+    }
+
+    void withdraw(double amount)
+    {
+        if(balance - amount >= minimumBalane)
+        {
+             balance = balance - amount;
+             cout << " Withdrawn =  " <<  amount << " Amount in balance is " << balance << endl;
+             
+        }
+        else
+        {
+            cout << " Sorry cant proceed with withdraw reqeust " << endl;
+        }
+       
+    }
+
+    
+    void printStatement()
+    {
+        Account :: printStatement();
+        cout << " Rate is " << interestRate << endl;
+        cout << " minimum blance is " << minimumBalane << endl;
+    }
+
+
+
+};
+
+
+class CheckingAccount : public Account
+{
+
+
+    public:
+
+    CheckingAccount()
+    { }
+
+    CheckingAccount(int accountnum,double Balance, string accountName,string Type) : Account(accountnum,Balance,accountName,Type) 
+    {}
+
+    
+    void CalculateInterest()
+    {
+        double RATE = (balance * rate * Time);
+        rate = RATE;
+        cout << " rate is " << RATE << endl;
+
+    }
+
+    void withdraw(double amount)
+    {
+        if(balance >= amount)
+        {
+             balance = balance - amount;
+             cout << " Withdrawn =  " <<  amount << " Amount in balance is " << balance << endl;
+        }
+        else
+        {
+            cout << " Sorry cant proceed with withdraw reqeust " << endl;
+        }
+       
+    }
+
+};
+
+class FixedDepositAccount : public Account
+{
+    protected:
+    string maturityDate;
+    double fixedInterestrate;
+
+
+    public:
+
+    FixedDepositAccount()
+    {
+        fixedInterestrate  = 0.0;
+        maturityDate = " ";
+    }
+
+    FixedDepositAccount(int accountnum,double Balance, string accountName,string Type,string Date, double rate) : Account(accountnum,Balance,accountName,Type) ,maturityDate(Date), fixedInterestrate(rate)
+    {}
+
+    
+    void CalculateInterest()
+    {
+        double RATE = (balance * rate * Time);
+        fixedInterestrate = RATE;
+        cout << " rate is " << RATE << endl;
+
+    }
+
+    void withdraw(double amount)
+    {
+    cout << "Cannot withdraw before maturity date: " << maturityDate << endl;
+    }
+
+    
+    void printStatement()
+    {
+        cout << " fixed Rate is " << fixedInterestrate << endl;
+        cout << " date  is " << maturityDate << endl;
+    }
+
+
+};
+
+int main()
+{
+    
+    Account * account[3];
+    account[0] = new SavingsAccount(101, 5000, "Alice", "Savings", 3.5, 2000);
+    account[1] = new CheckingAccount (102, 3000, "Bob", "Checking");
+    account[2] = new FixedDepositAccount (103, 10000, "Charlie", "Fixed Deposit", "2026-01-01", 5.0);
+    
+    cout << "StartUp Account Details " << endl ;
+    
+    for (int i = 0; i < 3; i++) {
+        account[i]->printStatement();
+    }
+
+    
+    cout << " Try Your Transactions";
+    account[0]->deposit(2000);
+    account[0]->withdraw(6000); 
+
+    account[1]->deposit(1000);
+    account[1]->withdraw(3500); 
+
+    account[2]->withdraw(5000); 
+
+    
+    cout << " Updated  Account Details After Transactions " << endl;
+    for (int i = 0; i < 3; i++) {
+        account[i]->printStatement();
+    }
+
+    
+    for (int i = 0; i < 3; i++) {
+        delete account[i];
+    }
+
+    return 0;
+}
