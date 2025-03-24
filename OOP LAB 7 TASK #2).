@@ -1,0 +1,209 @@
+// Bazil-Uddin-Khan 24k-0559 Bscs-2H 
+#include<iostream>
+using namespace std;
+
+class Shape
+{
+    int position;
+    string colour;
+    double borderThickness;
+
+    public:
+    Shape()
+    {
+        position = 0;
+        colour = " ";
+        borderThickness = 0.0;
+    }
+
+    Shape(int position,string colour,double borderThickness) : position(position), colour(colour), borderThickness(borderThickness)
+    {}
+
+    void draw()
+    {
+        cout << " Object is drawing " << " with position is " << position << " colour is " << colour << " boorder is " << borderThickness << endl;
+    }
+
+    virtual void calculateArea()
+    {}
+
+    virtual void calculatePerimeter()
+    {}
+
+};
+
+class Circle : public Shape
+{
+    double radius;
+    int centreposition;
+
+    public:
+    Circle()
+    {
+        radius = 0.0;
+        centreposition = 0;
+    }
+
+
+
+    Circle(int position,string colour,double borderThickness,double rad, int curentpos) : radius(rad), centreposition(curentpos),Shape(position,colour,borderThickness)
+    {}
+
+    void calculateArea()
+    {
+        double area = (3.142 * radius * radius);
+        cout << " Area is " << area << endl;
+    }
+
+    void calculatePerimeter()
+    {
+        cout << " Can't calucalate periemter of circle " << endl;
+
+    }
+
+    void draw()
+    {
+        cout << " Circle is drawing " << " with position is " << centreposition <<  " radius  is " << radius << endl;
+    }
+
+
+
+};
+
+class Rectangle : public Shape
+{
+
+    double width;
+    double height;
+    double TopleftCornerPos;
+    
+    int centreposition;
+
+    public:
+    Rectangle()
+    {
+        width = 0.0;
+        height = 0;
+        TopleftCornerPos = 0.0;
+    }
+
+
+
+    Rectangle(int position,string colour,double borderThickness,double Width,double Hieght,double pos) : width(Width),TopleftCornerPos(pos),height(Hieght),Shape(position,colour,borderThickness)
+    {}
+
+    void calculateArea()
+    {
+        double area = (height * width);
+        cout << " Rectangle  Area is " << area << endl;
+    }
+
+    void calculatePerimeter()
+    {
+        double perimeter = 2*(width + height);
+        cout << " Periemeter Of Rectangle is " <<perimeter<< endl;
+
+    }
+
+    void draw()
+    {
+        cout << " Rectangle is drawing " << " with Top left position is " <<TopleftCornerPos<<  " widtg is " << width << " Height is " << height <<  endl;
+    }
+
+};
+
+
+class Triangle : public Shape
+{
+    
+    double Base;
+    double Height;
+    
+    public:
+    Triangle()
+    {
+        Base = 0.0;
+        Height = 0.0;
+    }
+    
+    Triangle(int position,string colour,double borderThickness,double base, double height) : Shape( position,colour,borderThickness),Base(base),Height(height)
+    { }
+    
+    void calculateArea()
+    {
+        double area =(0.5*Height *Base);
+        cout << " Triangle  Area is " << area << endl;
+    }
+
+    void calculatePerimeter()
+    {
+    double perimeter  = (Base + Height);
+        cout << " Periemeter Of Rectangle is " << perimeter << endl;
+
+    }
+
+    void draw()
+    {
+        cout << " Triangle is drawing " << " with base is  " << Base <<   " Height is " << Height <<  endl;
+    }
+
+};
+
+
+class Polygon : public Shape
+{
+    int side;
+    
+    public:
+    Polygon()
+    {
+        side =0.0;
+    }
+    
+    Polygon(int position,string colour,double borderThickness,int Side) : Shape( position, colour, borderThickness),side(Side)
+    {}
+    
+    void calculateArea()
+    {
+        double area =(2.598*side*side);
+        cout << " Hexa Polygon   Area is " << area << endl;
+    }
+
+    void calculatePerimeter()
+    {
+    double perimeter  = (6 * side);
+        cout << " Periemeter Of Hexa polygon is " << perimeter << endl;
+
+    }
+
+    void draw()
+    {
+        cout <<" Polygon is drawing " << " with side of Hexa polyogn is  is  " << side <<  endl;
+    }
+    
+};
+
+int main()
+{
+    Circle circle(4,"Red",5.6,4,5);
+    circle.draw();
+    circle.calculateArea();
+    circle.calculatePerimeter();
+    
+    Rectangle rectangle(3,"Blue",5.6,1.2,3,5.8);
+    rectangle.draw();
+    rectangle.calculateArea();
+    rectangle.calculatePerimeter();
+    
+    Triangle triangle(2,"White",7,6.7,3);
+    triangle.draw();
+    triangle.calculateArea();
+    triangle.calculatePerimeter();
+    
+    Polygon polygon(2,"Purple",2.7,7);
+    polygon.draw();
+    polygon.calculateArea();
+    polygon.calculatePerimeter();
+    
+    
+}
