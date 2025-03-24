@@ -1,0 +1,256 @@
+// Bazil-Uddin-Khan24k-0559 Bscs-2H Q5
+#include <iostream>
+using namespace std;
+
+class Media
+{
+    private:
+    string title;
+    string publicationDate;
+    string uniqueID;
+    string publication;
+    int Lended;
+    
+    public:
+    Media()
+    {
+        Lended =0;
+        
+    }
+    
+    Media(string Title,string pubdate, string ID,string Publication) :title(Title),publicationDate(pubdate),uniqueID(ID),publication(Publication)
+    {}
+    
+    virtual void displayInfo()
+    {
+        
+        cout << " Title is " << title << endl;
+        cout << " Date of Publication is " << publicationDate << endl;
+        cout << " Unique Id  is " << uniqueID << endl;
+        cout << " Publication is  " << publication << endl;
+    }
+    
+    void checkout()
+    {
+        
+        
+        if(Lended == 0)
+        {
+            cout << " Successful Lended The Book " << endl;
+            Lended = 1;
+            
+        }
+        
+        else
+        {
+            cout << "Cant Lend " << endl;
+        
+        }
+
+    }
+    
+    void returnItem()
+    {
+        if(Lended == 1)
+        {
+           cout << " Succesfully Book Returned  " << endl;
+           Lended =0;
+        }
+        else
+        {
+            cout << " Already Booked " << endl;
+        }
+    }
+    
+    string GetTitle()
+    {
+        return title;
+    }
+    
+    string GetDate()
+    {
+        return publicationDate;
+    }
+    
+    
+    
+    
+};
+
+
+
+   
+class Book : public Media
+{
+    private:
+    string author;
+    string isbn;
+    int numberOfPages;
+    
+    
+    public:
+    Book()
+    {}
+    
+    Book(string Title,string pubdate, string ID,string Publication,string autho,string Isbn,int nopage) : Media(Title,pubdate,ID, Publication),author(autho),isbn(Isbn),numberOfPages(nopage)
+    {}
+    
+    string GetAuthor()
+    {
+        return author;
+    }
+    
+     void displayInfo()
+    {
+        
+        cout << "  __Book Info_ " << endl;
+        Media :: displayInfo();
+        
+        cout << endl;
+        
+        cout << " Author is " << author << endl;
+        cout << " Isbn is " << isbn << endl;
+        cout << " Total Book pages   is " << numberOfPages << endl;
+    }
+};
+
+class DVD : public Media
+{
+    private:
+    string director;
+    double duration; 
+    int rating;
+    
+    
+    public:
+    DVD()
+    {}
+    
+    DVD(string Title,string pubdate, string ID,string Publication,string direct,double durat ,int Rating) : Media(Title,pubdate,ID, Publication),director(direct),duration(durat),rating(Rating)
+    {}
+    
+    
+     void displayInfo()
+    {
+        cout << "  __DVD Info_ " << endl;
+        Media :: displayInfo();
+        
+        cout << endl;
+        cout << " Director  is " << director << endl;
+        cout << " Rating is " << rating << endl;
+        cout << " Duration  Duration "  << duration << endl;
+    }
+};
+
+
+class CD : public Media
+{
+    private:
+    string artist;
+    int numberOfTracks;
+    string genre;
+    
+    
+    public:
+    CD()
+    {}
+    
+    CD(string Title,string pubdate, string ID,string Publication,string Artist,int tracks,string  Genre) : Media(Title,pubdate,ID, Publication),artist(Artist),numberOfTracks(tracks),genre(Genre)
+    {}
+    
+    
+     void displayInfo()
+    {
+        cout << "  __Cd Info_ " << endl;
+        Media :: displayInfo();
+        
+        cout << endl;
+        cout << " Artist is " << artist << endl;
+        cout << " Total Tracks  is " << numberOfTracks << endl;
+        cout << "  Genre is  "  << genre << endl;
+    }
+};
+
+void SearchMediaByTitle(Media * media[],string Title)
+    {
+        for(int y =0; y<4;y++)
+        {
+            if(media[y]->GetTitle() == Title)
+            {
+                cout << " Succesfully Found Title " << endl;
+                return;
+            }
+        }
+        
+      cout << " Not Succesfully Found Title " << endl;
+    }
+    
+    
+    
+    
+    void SearchMediaByDate(Media * media[],string Date)
+    {
+        for(int y =0; y < 4 ;y++)
+        {
+            if(media[y]->GetDate() == Date)
+            {
+                cout << " Succesfully Found Date" << endl;
+                return;
+            }
+        }
+        
+        cout << " Not Succesfully Found Date " << endl;
+    }
+
+
+
+class Magzine : public Media
+{
+    int totalpages;
+    
+    public:
+    Magzine()
+    {}
+    
+    Magzine(string Title,string pubdate, string ID,string Publication,int totalPages) : Media(Title,pubdate,ID, Publication),totalpages(totalPages)
+    {}
+    
+    void displayInfo()
+    {
+        
+        cout << "  __MAGZINE  Info_ " << endl;
+        Media :: displayInfo();
+        
+        
+        cout << " Total Pages is " << totalpages << endl;
+    }
+    
+    
+};
+
+int main() 
+{
+    
+    Media  *  media[4];
+    int Track = 0;
+    media[0] = new Book("The Great Gatsby", "21-08-2023","1925",  "Scribner", "F. Scott Fitzgerald", "9780743273565", 101);
+    media[1] = new DVD("Inception", "2010", "102", "Warner Bros", "Christopher Nolan", 148, 8.8);
+    media[2] = new CD("Thriller", "1982", "103", "Epic Records", "Michael Jackson", 9,"Male");
+    media[3] = new Magzine("National Geographic","2023", "104", "NatGeo", 120);
+    
+   SearchMediaByTitle(media,"Inception");
+    SearchMediaByDate(media,"21-08-2023");
+   
+    media[0]->checkout();
+    media[0]->returnItem();
+    
+    cout << endl;
+    media[0]->displayInfo();
+    media[1]->displayInfo();
+    media[2]->displayInfo();
+    media[3]->displayInfo();
+   
+
+
+    return 0;
+}
