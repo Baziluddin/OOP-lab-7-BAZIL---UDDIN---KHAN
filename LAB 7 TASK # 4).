@@ -1,0 +1,290 @@
+// Bazil-Uddin-Khan 24k-0559 Bscs-2H Q4
+#include <iostream>
+using namespace std;
+
+class Person
+{
+public:
+string name;
+
+private:  
+//string name;  
+string id;  
+string address;  
+double phoneNumber;  
+string email;  
+
+
+  
+public:  
+Person()  
+{  
+     name = " ";  
+     id = " ";  
+     address = " ";  
+     phoneNumber = 0;  
+     email = " ";  
+     
+}  
+  
+Person(string Name,string Id,string add, double phone,string Email) : name(Name),id(Id),address(add),phoneNumber(phone),email(Email)  
+{}  
+  
+virtual void displayInfo()  
+{  
+    cout << " Name is " << name << " Id " << id << " Address = " << address << " phone Number = " << phoneNumber << " email is " << email << endl;  
+}  
+  
+void updateInfo()  
+{  
+     string Name;  
+     cout << " Enter Name  " << endl;  
+     cin.ignore();  
+     getline(cin,Name);  
+     name = Name;  
+       
+     string Id;  
+     cout << " Enter Id " << endl;  
+     //cin.ignore();  
+     getline(cin,Id);  
+     id = Id;  
+       
+     string add;  
+     cout << " Enter Add " << endl;  
+     //cin.ignore();  
+     getline(cin,add);  
+     address = add;  
+       
+     double phone;  
+     cout << "Enter PhoneNum" << endl;  
+     cin >> phone;  
+     phoneNumber = phone;  
+       
+     string Email;  
+     cout << " Enter Email " << endl;  
+     cin.ignore();  
+     getline(cin,Email);  
+     email = Email;  
+     
+    
+     
+     
+}
+
+};
+
+class Student : public Person
+{
+private:
+double  gpa;
+string enrollementYear;
+
+public:  
+Student()  
+{  
+      
+    enrollementYear = " ";  
+    gpa =0;  
+}  
+  
+Student(string Name,string Id,string add, double phone,string Email,string year,double Gpa) : enrollementYear(year),gpa(Gpa),Person( Name, Id, add,phone, Email)  
+{ }  
+  
+void displayInfo()  
+{  
+    string * coursesEnrolled;
+    int TotalCourse;  
+    cout << " Enter  Total Courses In which You Have Registered " << endl;  
+    cin >> TotalCourse;  
+    coursesEnrolled = new string[TotalCourse];  
+      
+    for(int i =0; i < TotalCourse;i++)  
+    {  
+        string CourseName;  
+        cout << " Enter Course Name " << endl;  
+        cin >> CourseName;  
+        coursesEnrolled[i] = CourseName;  
+    }  
+      
+      
+     cout << " Courses Enrolled By Studets Are " << endl;
+     
+    for(int i =0; i < TotalCourse;i++)  
+    {   
+       cout << coursesEnrolled[i] <<" " << endl;
+         
+    }  
+      
+    cout << " Gpa Is " << gpa << endl;  
+    cout << " EnrollementYear is " << enrollementYear << endl;  
+      
+}  
+  
+
+
+};
+
+class Proffessor : public Person
+{
+private:
+string department;
+string * coursesTaught;
+double salary;
+
+public:  
+Proffessor()  
+{  
+    department = " ";  
+    salary = 0.0;  
+}  
+  
+Proffessor(string Name,string Id,string add, double phone,string Email,string depa, double sal) : department(depa),salary(sal),Person(Name,Id, add, phone,Email)  
+{ }  
+  
+void displayInfo()  
+{  
+    
+    cout << endl;
+    cout << "     __ Proffesor Details ___ " << endl;
+    cout << endl;
+    
+    cout << " Department Of Proffessor is  " << name <<" Who Teaches In " << department << "Department" << " And salary Is " << salary << endl;  
+    int Totalcourses;  
+    cout << " Enter Total Courses You Thought " << endl;  
+    cin >> Totalcourses;  
+      
+    coursesTaught = new string[Totalcourses];  
+    for(int y =0; y < Totalcourses;y++)  
+    {  
+        string Name;  
+        cout << " Enter Course Name " << endl;  
+        cin >> Name;  
+        coursesTaught[y] = Name;  
+    }  
+    cout << " Courses Tought are " << endl;  
+      
+    for(int y =0; y < Totalcourses;y++)  
+    {  
+          
+        cout <<  coursesTaught[y] << endl;  
+    }  
+      
+}
+
+};
+
+class Staff : public Person
+{
+private:
+string department;
+string position;
+double salary;
+
+public:  
+Staff()  
+{  
+    department = " ";  
+    position = " ";  
+    salary = 0.0;  
+}  
+  
+Staff(string Name,string Id,string add, double phone,string Email,string depa,string pos,double sal) : department(depa),position(pos),salary(sal),Person(Name, Id,add, phone,Email)  
+{}  
+  
+void displayInfo()  
+{  
+    
+    cout << endl;
+    cout << " Staff Information Is " << endl;
+    
+    cout << " Staff Name is " << name << " Department is " << department << " Position = " << position << " Salary = "<< salary << endl;  
+}
+
+};
+
+class Course
+{
+private:
+string courseId;
+string courseName;
+int credits;
+Student * enrolledstudent;
+string instructor;
+string schedule;
+int totalstudent;
+
+public:  
+Course()  
+{  
+    courseId = " ";  
+    courseName = " ";  
+    credits =0 ;  
+    instructor = " ";  
+    schedule = " ";  
+    totalstudent =0;
+    
+}  
+  
+Course(string id, string Name, int Credits,  string Instructor,  string Schedule) : courseId(id),courseName(Name),credits(Credits),instructor(Instructor),schedule(Schedule)  
+{
+    enrolledstudent = new Student[10];
+}
+
+void registerStudent(Student student)
+{
+  if(totalstudent <= 10)
+  {
+      enrolledstudent[totalstudent] = student;
+      totalstudent++;
+      
+  }
+  
+}
+
+
+void display()
+{
+    for(int y =0; y <totalstudent;y++ )
+    {
+        cout << " Name is " << enrolledstudent[y].name << endl;
+    }
+}
+
+void calculateGrades()
+{
+double Gpa;
+cout << " Enter Goa In Subject " << courseName << endl;
+cin >> Gpa;
+
+int weihtage = (Gpa*credits);  
+ cout << " Your Gpa In Course =  "<<courseName << "  is =  " << Gpa << endl;
+
+}
+
+};
+
+int main()
+{
+
+Student student1("Qasim","24-456","Ddfg",3.5,"24-456@nu.edu.pk","12-08-2023",3.33);  
+student1.displayInfo();  
+
+
+Proffessor prof1("Dr. John", "P101", "456 University Rd", 1234567890, "john@university.edu", "Computer Science", 80000);  
+prof1.displayInfo();  
+
+Staff staff1("Alice Brown", "S123", "123 Main St", 9876543210, "alice@university.edu", "Admin", "Manager", 50000);  
+staff1.displayInfo();  
+
+
+Course course1("CS101", "Programming Fundamentals", 3, "Dr. Smith", "MWF 10:00 AM");  
+  
+  
+course1.registerStudent(student1);
+
+  
+
+  
+return 0;
+
+}
