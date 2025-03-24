@@ -1,0 +1,219 @@
+// Bazil-Uddin-Khan 24k-0559 Bscs-2H Q3
+
+#include <iostream>
+using namespace std;
+
+class Currency
+{
+    protected:
+    
+    double amount;
+    
+    private:
+    
+    string currencyCode;
+    string currencySymbol;
+    double ExchangeRate;
+    
+    public:
+    Currency()
+    {
+        amount = 0.0;
+        currencyCode = " ";
+        currencySymbol = " ";
+        ExchangeRate = 0.0;
+    }
+    
+    Currency(double Amount,string code,string symbol,double rate) : amount(Amount),currencyCode(code),currencySymbol(symbol),ExchangeRate(rate)
+    {  }
+    
+     virtual void convertToBase()
+    { }
+    
+    virtual void displayCurrency()
+    {  }
+};
+
+
+class Dollar : public Currency
+{
+    private:
+    string dollarSign;
+    string DollarCurrencyCode;
+    double * dollarToEuro = new double (0.194);
+    double * dollarToRuppes = new double (280.10);
+
+    public:
+    Dollar()
+    {
+        dollarSign = " ";
+        DollarCurrencyCode = " ";
+    }
+    
+    Dollar(double Amount, double rate) : dollarSign("$"), DollarCurrencyCode("USD"), Currency(Amount, "USD", "$", rate) 
+    { }
+    
+     void convertToBase( )
+    { 
+        string Choice;
+        cout << " Enter The Base Class in which You want to convert that are Euro/Ruppes " << endl;
+        cin >> Choice;
+        if(Choice == "Ruppes")
+        {
+            double val = (amount/ *dollarToRuppes);
+            cout << " Dollar in Ruppes are  " << val << " For amount " << amount;
+        }
+        else if(Choice == "Euro")
+        {
+            double val = (amount/ *dollarToEuro);
+            cout << " Dollar in Euro are  " << val << " For amount " << amount;
+        }
+        
+        
+    }
+    
+    void displayCurrency()
+    {  
+        cout << " Dollar Currency Has Sign " << dollarSign << endl;
+        cout << " Dollar Currency Code is " << DollarCurrencyCode << endl;
+    }
+    
+    ~Dollar()
+    {
+        delete dollarToEuro;
+        delete dollarToRuppes;
+    }
+    
+};
+
+class Euro : public Currency
+{
+    private:
+    string euroSign;
+    string EuroCurrencyCode;
+    double * euroToDollar = new double (1.0987);
+    double * euroToRuppes = new double (305.855);
+
+    public:
+    Euro()
+    {
+        euroSign = " ";
+        EuroCurrencyCode = " ";
+    }
+    
+    Euro(string sign, string code,
+      double Amount,string Code,string symbol,double rate) : euroSign(sign),EuroCurrencyCode(code),Currency(Amount,code,symbol, rate)
+    { }
+    
+     void convertToBase( )
+    { 
+        string Choice;
+        cout << " Enter The Base Class in which You want to convert that are Dollar/Ruppes " << endl;
+        cin >> Choice;
+        if(Choice == "Ruppes")
+        {
+            double val = (amount/ *euroToRuppes);
+            cout << " Euro in Ruppes are  " << val << " For amount " << amount;
+        }
+        else if(Choice == "Dollar")
+        {
+            double val = (amount/ *euroToRuppes);
+            cout << "  Euro in dollar is  " << val << " For amount " << amount;
+        }
+        
+        
+    }
+    
+    void displayCurrency()
+    {  
+        cout << " Euro Currency Has Sign " << euroSign << endl;
+        cout << " euro Currency Code is " << EuroCurrencyCode << endl;
+    }
+    
+    ~Euro()
+    {
+        delete euroToDollar;
+        delete euroToRuppes;
+    }
+    
+};
+
+
+class Ruppes : public Currency
+{
+    private:
+    string ruppeSign;
+    string RuppeCurrencyCode;
+    double * ruppeToDollar = new double (0.03546);
+    double * ruppeToEuro = new double (0.00327);
+
+    public:
+    Ruppes()
+    {
+        ruppeSign = " ";
+        RuppeCurrencyCode = " ";
+    }
+    
+    Ruppes(string sign, string code,
+      double Amount,string Code,string symbol,double rate) : ruppeSign(sign),RuppeCurrencyCode(code),Currency(Amount,code,symbol, rate)
+    { }
+    
+     void convertToBase( )
+    { 
+        string Choice;
+        cout << " Enter The Base Class in which You want to convert that are Euro/Dollar"<<endl;
+        cin >> Choice;
+        if(Choice == "Euro")
+        {
+            double val = (amount/ *ruppeToEuro);
+            cout << " Ruppes  in euro are  " << val << " For amount " << amount;
+        }
+        else if(Choice == "Dollar")
+        {
+            double val = (amount/ *ruppeToDollar);
+            cout << "  Euro in dollar is  " << val << " For amount " << amount;
+        }
+        
+        
+    }
+    
+    void displayCurrency()
+    {  
+        cout<< " Rupee currecncy sign  is " << ruppeSign << endl;
+        cout << " euro Currency Code is " << RuppeCurrencyCode << endl;
+    }
+    
+    ~Ruppes()
+    {
+        delete ruppeToDollar;
+        delete ruppeToEuro;
+    }
+};
+
+
+
+ int main() {
+    
+    Dollar usd(100, 1.0);  
+    Euro eur("€", "EUR", 85, "EUR", "€", 1.2);  
+    Ruppes inr("₹", "inr", 7500, "inr", "₹", 8366663); 
+
+   
+    cout << " Currency Details " << endl;
+    usd.displayCurrency();
+    eur.displayCurrency();
+    inr.displayCurrency();
+
+    cout << " Currency Conversion  " << endl ;
+    
+    cout << "Converting 100 USD to other currencies ";
+    usd.convertToBase();  
+    
+    cout << "Converting 85 Euros to other currencies: ";
+    eur.convertToBase();  
+    
+    cout << "Converting 7500 INR to other currencies: ";
+    inr.convertToBase();  
+
+    return 0;
+}
